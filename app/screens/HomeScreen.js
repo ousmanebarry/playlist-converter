@@ -2,11 +2,9 @@ import React from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { AuthContext } from '../../App';
-import { useNavigation } from '@react-navigation/core';
 import { StyleSheet, Text, TouchableOpacity, View, Platform, StatusBar, Image } from 'react-native';
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [user, setUser] = React.useContext(AuthContext);
 
   const handleSignOut = async () => {
