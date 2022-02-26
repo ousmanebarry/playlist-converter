@@ -30,12 +30,7 @@ function App() {
   return (
     <NavigationContainer>
       {!user ? (
-        <Stack.Navigator
-          options={{
-            title: 'Sign in',
-            animationTypeForReplace: user ? 'pop' : 'push',
-          }}
-        >
+        <Stack.Navigator>
           <Stack.Screen name='Login' component={LoginScreen} />
         </Stack.Navigator>
       ) : (

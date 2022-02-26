@@ -18,8 +18,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <Text>ID: {auth.currentUser?.uid}</Text>
+      <Text>Email: {user?.email}</Text>
+      <Text>ID: {user?.uid}</Text>
       <Image style={styles.tinyLogo} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}></Image>
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
