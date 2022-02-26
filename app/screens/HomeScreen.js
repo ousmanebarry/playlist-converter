@@ -1,7 +1,7 @@
 import React from 'react';
+import { AuthContext } from '../../App';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { AuthContext } from '../../App';
 import { StyleSheet, Text, TouchableOpacity, View, Platform, StatusBar, Image } from 'react-native';
 
 const HomeScreen = () => {

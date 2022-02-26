@@ -1,11 +1,12 @@
 import React from 'react';
+import { LogBox } from 'react-native';
+import { auth } from './app/config/firebase';
+import HomeScreen from './app/screens/HomeScreen';
+import LoginScreen from './app/screens/LoginScreen';
+import SignupScreen from './app/screens/SignupScreen';
+import { onAuthStateChanged } from 'firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogBox } from 'react-native';
-import { onAuthStateChanged } from 'firebase/auth';
-import LoginScreen from './app/screens/LoginScreen';
-import HomeScreen from './app/screens/HomeScreen';
-import { auth } from './app/config/firebase';
 
 LogBox.ignoreLogs(['Setting a timer', 'AsyncStorage has been extracted from react-native']);
 
@@ -32,6 +33,7 @@ function App() {
       {!user ? (
         <Stack.Navigator>
           <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Signup' component={SignupScreen} />
         </Stack.Navigator>
       ) : (
         <AuthContext.Provider value={[user, setUser]}>

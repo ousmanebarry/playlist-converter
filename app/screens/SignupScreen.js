@@ -1,25 +1,25 @@
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
-function LoginScreen() {
+function SignupScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigation = useNavigation();
 
   const handleRedirect = () => {
-    navigation.replace('Signup');
+    navigation.replace('Login');
   };
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     try {
-      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredentials.user;
-      console.log('Logged in with: ' + user.email);
+      console.log('Registered with: ' + user.email);
     } catch (error) {
-      alert(error.message);
+      alert(error.code);
     }
   };
 
@@ -37,18 +37,18 @@ function LoginScreen() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Sign in</Text>
+        <TouchableOpacity onPress={handleSignUp} style={styles.button}>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleRedirect}>
-          <Text style={styles.buttonOutlineText}>Don't have an account? Register!</Text>
+          <Text style={styles.buttonOutlineText}>Already have an account? Login!</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
