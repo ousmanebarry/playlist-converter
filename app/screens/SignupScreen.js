@@ -22,19 +22,17 @@ function SignupScreen() {
       if (password == cPassword) {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
-        const userRef = doc(db, 'users', userCredentials.user.uid);
+        const userRef = doc(db, 'users', user.uid);
         await setDoc(userRef, {
           firstName,
           lastName,
-          email,
+          emailAddress: email,
         });
-        console.log('Registered with: ' + user.email);
       } else {
         throw 'Passwords do not match';
       }
     } catch (error) {
       alert(error);
-      console.log(error);
     }
   };
 
