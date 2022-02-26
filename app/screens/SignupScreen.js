@@ -5,6 +5,8 @@ import { auth } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 function SignupScreen() {
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigation = useNavigation();
@@ -26,6 +28,18 @@ function SignupScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior='padding'>
       <View style={styles.inputContainer}>
+        <TextInput
+          placeholder='First Name *'
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder='Last Name *'
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+          style={styles.input}
+        />
         <TextInput placeholder='Email *' value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput
           placeholder='Password *'
