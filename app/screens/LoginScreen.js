@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 function LoginScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [errorMsg, setErrorMsg] = React.useState('');
   const navigation = useNavigation();
 
   const handleRedirect = () => {
@@ -20,7 +19,7 @@ function LoginScreen() {
       const user = userCredentials.user;
       console.log('Logged in with: ' + user.email);
     } catch (error) {
-      if (error.code == 'auth/invalid-email') setErrorMsg('Invalid email');
+      alert(error.code);
     }
   };
 
@@ -46,8 +45,6 @@ function LoginScreen() {
           secureTextEntry
         />
       </View>
-
-      <Text style={styles.errorMsg}>{errorMsg}</Text>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>

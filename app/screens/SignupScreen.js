@@ -1,7 +1,8 @@
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 
 function SignupScreen() {
@@ -21,12 +22,19 @@ function SignupScreen() {
       if (password == cPassword) {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
+        const userRef = doc(db, 'users', userCredentials.user.uid);
+        await setDoc(userRef, {
+          firstName,
+          lastName,
+          email,
+        });
         console.log('Registered with: ' + user.email);
       } else {
         throw 'Passwords do not match';
       }
     } catch (error) {
       alert(error);
+      console.log(error);
     }
   };
 
