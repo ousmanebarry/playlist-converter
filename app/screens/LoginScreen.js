@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -24,13 +24,22 @@ function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding'>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder='Email *' value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+        <TextInput
+          placeholder='Email *'
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          textContentType='emailAddress'
+          autoComplete='email'
+          style={styles.input}
+        />
         <TextInput
           placeholder='Password *'
           value={password}
           onChangeText={(text) => setPassword(text)}
+          textContentType='password'
+          autoComplete='password'
           style={styles.input}
           secureTextEntry
         />

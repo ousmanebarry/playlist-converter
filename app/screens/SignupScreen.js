@@ -26,19 +26,21 @@ function SignupScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding'>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder='First Name *'
           value={firstName}
           onChangeText={(text) => setFirstName(text)}
           style={styles.input}
+          maxLength={30}
         />
         <TextInput
           placeholder='Last Name *'
           value={lastName}
           onChangeText={(text) => setLastName(text)}
           style={styles.input}
+          maxLength={30}
         />
         <TextInput placeholder='Email *' value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
         <TextInput

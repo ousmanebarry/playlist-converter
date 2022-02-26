@@ -8,7 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-LogBox.ignoreLogs(['Setting a timer', 'AsyncStorage has been extracted from react-native']);
+LogBox.ignoreLogs(['Setting a timer', 'AsyncStorage has been extracted from react-native', 'Require cycle: App.js']);
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +31,7 @@ function App() {
   return (
     <NavigationContainer>
       {!user ? (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Signup' component={SignupScreen} />
         </Stack.Navigator>
