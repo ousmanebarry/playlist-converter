@@ -9,6 +9,7 @@ function SignupScreen() {
   const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [cPassword, setCPassword] = React.useState('');
   const navigation = useNavigation();
 
   const handleRedirect = () => {
@@ -17,11 +18,15 @@ function SignupScreen() {
 
   const handleSignUp = async () => {
     try {
-      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredentials.user;
-      console.log('Registered with: ' + user.email);
+      if (password == cPassword) {
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredentials.user;
+        console.log('Registered with: ' + user.email);
+      } else {
+        throw 'Passwords do not match';
+      }
     } catch (error) {
-      alert(error.code);
+      alert(error);
     }
   };
 
@@ -42,11 +47,24 @@ function SignupScreen() {
           style={styles.input}
           maxLength={30}
         />
-        <TextInput placeholder='Email *' value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+        <TextInput
+          placeholder='Email *'
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          keyboardType='email-address'
+          style={styles.input}
+        />
         <TextInput
           placeholder='Password *'
           value={password}
           onChangeText={(text) => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
+        <TextInput
+          placeholder='Confirm Password *'
+          value={cPassword}
+          onChangeText={(text) => setCPassword(text)}
           style={styles.input}
           secureTextEntry
         />
@@ -57,7 +75,7 @@ function SignupScreen() {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleRedirect}>
-          <Text style={styles.buttonOutlineText}>Already have an account? Login!</Text>
+          <Text style={styles.buttonOutlineText}>Already have an account? Sign in!</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

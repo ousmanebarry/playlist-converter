@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 function LoginScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState('');
   const navigation = useNavigation();
 
   const handleRedirect = () => {
@@ -19,7 +20,7 @@ function LoginScreen() {
       const user = userCredentials.user;
       console.log('Logged in with: ' + user.email);
     } catch (error) {
-      alert(error.message);
+      if (error.code == 'auth/invalid-email') setErrorMsg('Invalid email');
     }
   };
 
@@ -32,6 +33,7 @@ function LoginScreen() {
           onChangeText={(text) => setEmail(text)}
           textContentType='emailAddress'
           autoComplete='email'
+          keyboardType='email-address'
           style={styles.input}
         />
         <TextInput
@@ -45,12 +47,14 @@ function LoginScreen() {
         />
       </View>
 
+      <Text style={styles.errorMsg}>{errorMsg}</Text>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleRedirect}>
-          <Text style={styles.buttonOutlineText}>Don't have an account? Register!</Text>
+          <Text style={styles.buttonOutlineText}>Don't have an account? Sign up!</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -105,5 +109,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  errorMsg: {
+    color: '#FF0000',
+    fontWeight: '700',
   },
 });
