@@ -1,11 +1,26 @@
 import React from 'react';
 import { AuthContext } from '../../App';
 import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import { StyleSheet, Text, TouchableOpacity, View, Platform, StatusBar, Image } from 'react-native';
 
 const HomeScreen = () => {
   const [user, setUser] = React.useContext(AuthContext);
+
+  React.useEffect(async () => {
+    try {
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log('Document data:', docSnap.data());
+      } else {
+        console.log('No such document!');
+      }
+    } catch (error) {
+      alert(error);
+    }
+  });
 
   const handleSignOut = async () => {
     try {

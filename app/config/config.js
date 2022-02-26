@@ -8,5 +8,3 @@ export const CONFIG = {
   MESSAGING_SENDER_ID: MESSAGING_SENDER_ID,
   APP_ID: APP_ID,
 };
-
-console.log(FIREBASE_API_KEY);
