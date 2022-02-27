@@ -22,11 +22,8 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   const handleSignOut = () => {
-    Alert.alert('Confirm Logout', 'Are you sure you want to logout?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
+    Alert.alert('Confirm Sign Out', 'Are you sure you want to sign out? You will be returned to the sign in screen.', [
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'OK',
         onPress: async () => {
@@ -69,7 +66,7 @@ function App() {
                 <DrawerContentScrollView {...props}>
                   <DrawerItemList {...props} />
                   <DrawerItem
-                    label='Logout'
+                    label='Sign out'
                     inactiveBackgroundColor='#0782F9'
                     labelStyle={{
                       fontWeight: '700',
