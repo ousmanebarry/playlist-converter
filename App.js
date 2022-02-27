@@ -1,16 +1,20 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { LogBox } from 'react-native';
 import { auth } from './app/config/firebase';
 import HomeScreen from './app/screens/HomeScreen';
+import { onAuthStateChanged } from 'firebase/auth';
 import LoginScreen from './app/screens/LoginScreen';
 import SignupScreen from './app/screens/SignupScreen';
-import { onAuthStateChanged } from 'firebase/auth';
+import ProfileScreen from './app/screens/ProfileScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 LogBox.ignoreLogs(['Setting a timer', 'AsyncStorage has been extracted from react-native', 'Require cycle: App.js']);
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -37,9 +41,12 @@ function App() {
         </Stack.Navigator>
       ) : (
         <AuthContext.Provider value={[user, setUser]}>
-          <Stack.Navigator>
-            <Stack.Screen name='Home' component={HomeScreen} />
-          </Stack.Navigator>
+          <NavigationContainer independent>
+            <Drawer.Navigator initialRouteName='Home'>
+              <Drawer.Screen name='Home' component={HomeScreen} />
+              <Drawer.Screen name='Profile' component={ProfileScreen} />
+            </Drawer.Navigator>
+          </NavigationContainer>
         </AuthContext.Provider>
       )}
     </NavigationContainer>
