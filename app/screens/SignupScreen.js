@@ -3,22 +3,16 @@ import { auth, db } from '../config/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 function SignupScreen() {
+  const colourPalette = ['989788', '51344D', '6F5060', 'A78682'];
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cPassword, setCPassword] = React.useState('');
   const navigation = useNavigation();
-
-  const metadata = {
-    contentType: 'image/png',
-  };
-
-  const storage = getStorage();
 
   const handleRedirect = () => {
     navigation.replace('Login');
@@ -30,25 +24,12 @@ function SignupScreen() {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
         const userRef = doc(db, 'users', user.uid);
-        const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
-        const fileURL = await fetch(
-          `https://ui-avatars.com/api/?name=${firstAndLastName}&background=random&color=fff&bold=true&rounded=true`
-        );
-        const pngFile = await fileURL.blob();
-        const storageRef = ref(storage, 'usersProfilePicture/' + user.uid);
 
-        console.log(firstAndLastName);
-        console.log(pngFile);
-
-        uploadBytes(storageRef, pngFile, metadata).then(async () => {
-          console.log('Uploaded!');
-          const uploadedFile = await getDownloadURL(storageRef);
-          await setDoc(userRef, {
-            firstName,
-            lastName,
-            emailAddress: email,
-            profileURL: uploadedFile,
-          });
+        await setDoc(userRef, {
+          firstName,
+          lastName,
+          emailAddress: email,
+          colourPalette: colourPalette[Math.floor(Math.random() * colourPalette.length)],
         });
       } else if (!firstName || !lastName) {
         throw 'Please fill in your first and last name';

@@ -11,7 +11,7 @@ import SignupScreen from './app/screens/SignupScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
 import CustomDrawer from './app/components/CustomDrawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 LogBox.ignoreLogs(['Setting a timer', 'AsyncStorage has been extracted from react-native']);
@@ -24,6 +24,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
+  const [colourPalette, setColourPalette] = React.useState('');
   const [profileURL, setProfileURL] = React.useState('');
 
   const handleSignOut = () => {
@@ -56,10 +57,15 @@ function App() {
             if (docSnap.exists()) {
               setFirstName(docSnap.data().firstName);
               setLastName(docSnap.data().lastName);
-              setProfileURL(docSnap.data().profileURL);
-              console.log(firstName);
-              console.log(lastName);
-              console.log(profileURL);
+              setColourPalette(docSnap.data().colourPalette);
+
+              const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
+
+              console.log(firstAndLastName);
+
+              setProfileURL(
+                `https://ui-avatars.com/api/?name=${firstAndLastName}&color=fff&background=${colourPalette}&bold=true&rounded=true`
+              );
             }
           } catch (error) {
             console.log(error);
