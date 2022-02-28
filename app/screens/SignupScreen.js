@@ -30,7 +30,6 @@ function SignupScreen() {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
         const userRef = doc(db, 'users', user.uid);
-        let profileURL;
         const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
         const fileURL = await fetch(
           `https://ui-avatars.com/api/?name=${firstAndLastName}&background=random&color=fff&bold=true`
@@ -44,14 +43,12 @@ function SignupScreen() {
         uploadBytes(storageRef, pngFile, metadata).then(async () => {
           console.log('Uploaded!');
           const uploadedFile = await getDownloadURL(storageRef);
-          profileURL = uploadedFile;
-        });
-
-        await setDoc(userRef, {
-          firstName,
-          lastName,
-          emailAddress: email,
-          profileURL: profileURL,
+          await setDoc(userRef, {
+            firstName,
+            lastName,
+            emailAddress: email,
+            profileURL: uploadedFile,
+          });
         });
       } else if (!firstName || !lastName) {
         throw 'Please fill in your first and last name';

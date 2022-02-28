@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -7,6 +7,7 @@ function ProfileScreen() {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [emailAddress, setEmailAddress] = React.useState('');
+  const [profileURL, setProfileURL] = React.useState('');
 
   React.useEffect(async () => {
     try {
@@ -16,6 +17,7 @@ function ProfileScreen() {
         setFirstName(docSnap.data().firstName);
         setLastName(docSnap.data().lastName);
         setEmailAddress(docSnap.data().emailAddress);
+        setProfileURL(docSnap.data().profileURL);
       } else {
         console.log('No such document!');
       }
@@ -29,8 +31,16 @@ function ProfileScreen() {
       <Text>First name : {firstName}</Text>
       <Text>Last name : {lastName}</Text>
       <Text>Email address : {emailAddress}</Text>
+      <Image style={styles.tinyLogo} source={profileURL ? { uri: profileURL } : null} />
     </View>
   );
 }
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+});
