@@ -15,7 +15,7 @@ function SignupScreen() {
   const navigation = useNavigation();
 
   const metadata = {
-    contentType: 'image/jpeg',
+    contentType: 'image/png',
   };
 
   const storage = getStorage();
@@ -32,7 +32,7 @@ function SignupScreen() {
         const userRef = doc(db, 'users', user.uid);
         const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
         const fileURL = await fetch(
-          `https://ui-avatars.com/api/?name=${firstAndLastName}&background=random&color=fff&bold=true`
+          `https://ui-avatars.com/api/?name=${firstAndLastName}&background=random&color=fff&bold=true&rounded=true`
         );
         const pngFile = await fileURL.blob();
         const storageRef = ref(storage, 'usersProfilePicture/' + user.uid);

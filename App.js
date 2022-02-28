@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { LogBox, Alert } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from './app/config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './app/config/firebase';
 import HomeScreen from './app/screens/HomeScreen';
 import { onAuthStateChanged } from 'firebase/auth';
+import { LogBox, Alert, Image } from 'react-native';
 import LoginScreen from './app/screens/LoginScreen';
 import SignupScreen from './app/screens/SignupScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
@@ -20,6 +21,9 @@ const Drawer = createDrawerNavigator();
 function App() {
   const [user, setUser] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [profileURL, setProfileURL] = React.useState('');
 
   const handleSignOut = () => {
     Alert.alert('Confirm Sign Out', 'Are you sure you want to sign out? You will be returned to the sign in screen.', [
@@ -38,11 +42,27 @@ function App() {
     ]);
   };
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setLoading(false);
       if (user) {
         setUser(user);
+        const setInfo = async () => {
+          try {
+            const docRef = doc(db, 'users', user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+              setFirstName(docSnap.data().firstName);
+              setLastName(docSnap.data().lastName);
+              setEmailAddress(docSnap.data().emailAddress);
+              setProfileURL(docSnap.data().profileURL);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        setInfo();
       }
     });
     return unsubscribe;
@@ -64,6 +84,11 @@ function App() {
             drawerContent={(props) => {
               return (
                 <DrawerContentScrollView {...props}>
+                  <DrawerItem
+                    label={`${firstName} ${lastName}`}
+                    icon={() => <Image source={{ uri: '' }} />}
+                    labelStyle={{ fontWeight: '700' }}
+                  />
                   <DrawerItemList {...props} />
                   <DrawerItem
                     label='Sign out'

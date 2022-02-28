@@ -19,7 +19,7 @@ function ProfileScreen() {
         setEmailAddress(docSnap.data().emailAddress);
         setProfileURL(docSnap.data().profileURL);
       } else {
-        console.log('No such document!');
+        throw 'This user does not exist';
       }
     } catch (error) {
       alert(error);
