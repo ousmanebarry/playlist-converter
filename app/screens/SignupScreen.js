@@ -3,10 +3,10 @@ import { auth, db } from '../config/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import palette from '../../palette.json';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 function SignupScreen() {
-  const colourPalette = ['989788', '51344D', '6F5060', 'A78682'];
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -29,7 +29,7 @@ function SignupScreen() {
           firstName,
           lastName,
           emailAddress: email,
-          colourPalette: colourPalette[Math.floor(Math.random() * colourPalette.length)],
+          colourPalette: palette[Math.floor(Math.random() * palette.length)],
         });
       } else if (!firstName || !lastName) {
         throw 'Please fill in your first and last name';
