@@ -5,10 +5,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './app/config/firebase';
 import HomeScreen from './app/screens/HomeScreen';
 import { onAuthStateChanged } from 'firebase/auth';
-import { LogBox, Alert, Image } from 'react-native';
+import { LogBox, Alert } from 'react-native';
 import LoginScreen from './app/screens/LoginScreen';
 import SignupScreen from './app/screens/SignupScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
+import CustomDrawer from './app/components/CustomDrawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -55,8 +56,10 @@ function App() {
             if (docSnap.exists()) {
               setFirstName(docSnap.data().firstName);
               setLastName(docSnap.data().lastName);
-              setEmailAddress(docSnap.data().emailAddress);
               setProfileURL(docSnap.data().profileURL);
+              console.log(firstName);
+              console.log(lastName);
+              console.log(profileURL);
             }
           } catch (error) {
             console.log(error);
@@ -81,27 +84,9 @@ function App() {
         <NavigationContainer independent>
           <Drawer.Navigator
             initialRouteName='Home'
-            drawerContent={(props) => {
-              return (
-                <DrawerContentScrollView {...props}>
-                  <DrawerItem
-                    label={`${firstName} ${lastName}`}
-                    icon={() => <Image source={{ uri: '' }} />}
-                    labelStyle={{ fontWeight: '700' }}
-                  />
-                  <DrawerItemList {...props} />
-                  <DrawerItem
-                    label='Sign out'
-                    inactiveBackgroundColor='#0782F9'
-                    labelStyle={{
-                      fontWeight: '700',
-                      color: '#FFF',
-                    }}
-                    onPress={handleSignOut}
-                  />
-                </DrawerContentScrollView>
-              );
-            }}
+            drawerContent={(props) => (
+              <CustomDrawer props={props} hso={handleSignOut} fn={firstName} ln={lastName} purl={profileURL} />
+            )}
           >
             <Drawer.Screen name='Home' component={HomeScreen} />
             <Drawer.Screen name='Profile' component={ProfileScreen} />
