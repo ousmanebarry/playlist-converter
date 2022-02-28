@@ -25,7 +25,6 @@ function App() {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [colourPalette, setColourPalette] = React.useState('');
-  const [profileURL, setProfileURL] = React.useState('');
 
   const handleSignOut = () => {
     Alert.alert('Confirm Sign Out', 'Are you sure you want to sign out? You will be returned to the sign in screen.', [
@@ -58,14 +57,6 @@ function App() {
               setFirstName(docSnap.data().firstName);
               setLastName(docSnap.data().lastName);
               setColourPalette(docSnap.data().colourPalette);
-
-              const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
-
-              console.log(firstAndLastName);
-
-              setProfileURL(
-                `https://ui-avatars.com/api/?name=${firstAndLastName}&color=fff&background=${colourPalette}&bold=true&rounded=true`
-              );
             }
           } catch (error) {
             console.log(error);
@@ -91,7 +82,7 @@ function App() {
           <Drawer.Navigator
             initialRouteName='Home'
             drawerContent={(props) => (
-              <CustomDrawer props={props} hso={handleSignOut} fn={firstName} ln={lastName} purl={profileURL} />
+              <CustomDrawer props={props} hso={handleSignOut} fn={firstName} ln={lastName} cp={colourPalette} />
             )}
           >
             <Drawer.Screen name='Home' component={HomeScreen} />

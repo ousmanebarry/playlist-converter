@@ -2,11 +2,14 @@ import React from 'react';
 import { StyleSheet, Image, Text, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
-function CustomDrawer({ props, hso, fn, ln, purl }) {
+function CustomDrawer({ props, hso, fn, ln, cp }) {
+  const fln = encodeURIComponent(`${fn} ${ln}`).replace(/%20/g, '+');
+  const purl = `https://ui-avatars.com/api/?name=${fln}&color=fff&background=${cp}&bold=true&rounded=true`;
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.userInfo}>
-        <Image source={purl ? { uri: purl } : null} style={styles.profilePicture} />
+        <Image source={{ uri: purl }} style={styles.profilePicture} />
         <Text style={styles.fullName}>{`${fn} ${ln}`}</Text>
       </View>
       <DrawerItemList {...props} />

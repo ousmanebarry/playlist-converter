@@ -7,7 +7,6 @@ function ProfileScreen() {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [emailAddress, setEmailAddress] = React.useState('');
-  const [profileURL, setProfileURL] = React.useState('');
 
   React.useEffect(async () => {
     try {
@@ -17,7 +16,6 @@ function ProfileScreen() {
         setFirstName(docSnap.data().firstName);
         setLastName(docSnap.data().lastName);
         setEmailAddress(docSnap.data().emailAddress);
-        setProfileURL(docSnap.data().profileURL);
       } else {
         throw 'This user does not exist';
       }
@@ -31,7 +29,6 @@ function ProfileScreen() {
       <Text>First name : {firstName}</Text>
       <Text>Last name : {lastName}</Text>
       <Text>Email address : {emailAddress}</Text>
-      <Image style={styles.tinyLogo} source={profileURL ? { uri: profileURL } : null} />
     </View>
   );
 }

@@ -8,12 +8,6 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Email: {user?.email}</Text>
-      <Image
-        style={styles.tinyLogo}
-        source={{
-          uri: 'https://ui-avatars.com/api/?name=Ousmane+Barry&background=random&color=fff&bold=true',
-        }}
-      />
       <Text>ID: {user?.uid}</Text>
     </View>
   );
