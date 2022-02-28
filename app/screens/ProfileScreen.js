@@ -13,7 +13,6 @@ function ProfileScreen() {
       const docRef = doc(db, 'users', auth.currentUser.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log('Document data:', docSnap.data());
         setFirstName(docSnap.data().firstName);
         setLastName(docSnap.data().lastName);
         setEmailAddress(docSnap.data().emailAddress);

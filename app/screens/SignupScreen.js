@@ -1,9 +1,10 @@
 import React from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../config/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 function SignupScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -13,21 +14,47 @@ function SignupScreen() {
   const [cPassword, setCPassword] = React.useState('');
   const navigation = useNavigation();
 
+  const metadata = {
+    contentType: 'image/jpeg',
+  };
+
+  const storage = getStorage();
+
   const handleRedirect = () => {
     navigation.replace('Login');
   };
 
   const handleSignUp = async () => {
     try {
-      if (password == cPassword) {
+      if (password == cPassword && firstName && lastName) {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
         const userRef = doc(db, 'users', user.uid);
+        let profileURL;
+        const firstAndLastName = encodeURIComponent(`${firstName} ${lastName}`).replace(/%20/g, '+');
+        const fileURL = await fetch(
+          `https://ui-avatars.com/api/?name=${firstAndLastName}&background=random&color=fff&bold=true`
+        );
+        const pngFile = await fileURL.blob();
+        const storageRef = ref(storage, 'usersProfilePicture/' + user.uid);
+
+        console.log(firstAndLastName);
+        console.log(pngFile);
+
+        uploadBytes(storageRef, pngFile, metadata).then(async () => {
+          console.log('Uploaded!');
+          const uploadedFile = await getDownloadURL(storageRef);
+          profileURL = uploadedFile;
+        });
+
         await setDoc(userRef, {
           firstName,
           lastName,
           emailAddress: email,
+          profileURL: profileURL,
         });
+      } else if (!firstName || !lastName) {
+        throw 'Please fill in your first and last name';
       } else {
         throw 'Passwords do not match';
       }
