@@ -25,10 +25,19 @@ function ProfileScreen() {
   });
 
   return (
-    <View>
-      <Text>First name : {firstName}</Text>
-      <Text>Last name : {lastName}</Text>
-      <Text>Email address : {emailAddress}</Text>
+    <View style={styles.profile}>
+      <View style={styles.singleBox}>
+        <Text style={styles.title}>First name</Text>
+        <Text style={styles.singleText}>{firstName}</Text>
+      </View>
+      <View style={styles.singleBox}>
+        <Text style={styles.title}>Last name</Text>
+        <Text style={styles.singleText}>{lastName}</Text>
+      </View>
+      <View style={styles.singleBox}>
+        <Text style={styles.title}>Email address</Text>
+        <Text style={styles.singleText}>{emailAddress}</Text>
+      </View>
     </View>
   );
 }
@@ -36,8 +45,22 @@ function ProfileScreen() {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  tinyLogo: {
-    width: 50,
-    height: 50,
+  title: {
+    fontWeight: '700',
+    backgroundColor: '#fff',
+    fontSize: 25,
+    padding: 10,
+  },
+  profile: {
+    justifyContent: 'space-between',
+  },
+  singleBox: {
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+  },
+  singleText: {
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: '600',
   },
 });
