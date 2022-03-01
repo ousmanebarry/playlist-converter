@@ -4,7 +4,7 @@ import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [emailAddress, setEmailAddress] = React.useState('');
@@ -26,34 +26,40 @@ function ProfileScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Navbar />
-      <View style={styles.secondContainer}>
-        <View style={styles.singleBox}>
-          <TextInput value={firstName} style={styles.inputBox} editable={false} />
+    <View style={styles.main}>
+      <SafeAreaView style={styles.container}>
+        <Navbar navigation={navigation} />
+        <View style={styles.secondContainer}>
+          <View style={styles.singleBox}>
+            <TextInput value={firstName} style={styles.inputBox} editable={false} />
+          </View>
+          <View style={styles.singleBox}>
+            <TextInput value={lastName} style={styles.inputBox} editable={false} />
+          </View>
+          <View style={styles.singleBox}>
+            <TextInput value={emailAddress} style={styles.inputBox} editable={false} />
+          </View>
         </View>
-        <View style={styles.singleBox}>
-          <TextInput value={lastName} style={styles.inputBox} editable={false} />
-        </View>
-        <View style={styles.singleBox}>
-          <TextInput value={emailAddress} style={styles.inputBox} editable={false} />
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
+    backgroundColor: '#fff',
     marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
   },
   secondContainer: {
     margin: 10,
   },
   inputBox: {
-    backgroundColor: '#f2f2f2',
     color: '#000',
     fontSize: 20,
   },
