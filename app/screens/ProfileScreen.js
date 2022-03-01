@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform, StatusBar, SafeAreaView } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { TextInput } from 'react-native-paper';
@@ -26,7 +26,7 @@ function ProfileScreen() {
   });
 
   return (
-    <View style={styles.profile}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.singleBox}>
         <TextInput label='First name' value={firstName} style={styles.inputBox} disabled />
       </View>
@@ -36,13 +36,17 @@ function ProfileScreen() {
       <View style={styles.singleBox}>
         <TextInput label='Email address' value={emailAddress} style={styles.inputBox} disabled />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+    marginTop: Platform.OS == 'android' ? StatusBar.currentHeight + 10 : 0,
+  },
   inputBox: {
     backgroundColor: '#f2f2f2',
     fontSize: 20,

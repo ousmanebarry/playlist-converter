@@ -81,6 +81,7 @@ function App() {
         <NavigationContainer independent>
           <Drawer.Navigator
             initialRouteName='Home'
+            screenOptions={{ headerShown: false }}
             drawerContent={(props) => (
               <CustomDrawer props={props} hso={handleSignOut} fn={firstName} ln={lastName} cp={colourPalette} />
             )}
