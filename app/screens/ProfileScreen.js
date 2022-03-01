@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform, StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform, StatusBar, SafeAreaView, TextInput } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { TextInput } from 'react-native-paper';
+import Navbar from '../components/Navbar';
 
 function ProfileScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -27,14 +27,17 @@ function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.singleBox}>
-        <TextInput label='First name' value={firstName} style={styles.inputBox} disabled />
-      </View>
-      <View style={styles.singleBox}>
-        <TextInput label='Last name' value={lastName} style={styles.inputBox} disabled />
-      </View>
-      <View style={styles.singleBox}>
-        <TextInput label='Email address' value={emailAddress} style={styles.inputBox} disabled />
+      <Navbar />
+      <View style={styles.secondContainer}>
+        <View style={styles.singleBox}>
+          <TextInput value={firstName} style={styles.inputBox} editable={false} />
+        </View>
+        <View style={styles.singleBox}>
+          <TextInput value={lastName} style={styles.inputBox} editable={false} />
+        </View>
+        <View style={styles.singleBox}>
+          <TextInput value={emailAddress} style={styles.inputBox} editable={false} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -44,11 +47,14 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
+  },
+  secondContainer: {
     margin: 10,
-    marginTop: Platform.OS == 'android' ? StatusBar.currentHeight + 10 : 0,
   },
   inputBox: {
     backgroundColor: '#f2f2f2',
+    color: '#000',
     fontSize: 20,
   },
   singleBox: {
