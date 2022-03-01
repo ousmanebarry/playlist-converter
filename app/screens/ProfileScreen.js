@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { TextInput } from 'react-native-paper';
 
 function ProfileScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -27,16 +28,13 @@ function ProfileScreen() {
   return (
     <View style={styles.profile}>
       <View style={styles.singleBox}>
-        <Text style={styles.title}>First name</Text>
-        <Text style={styles.singleText}>{firstName}</Text>
+        <TextInput label='First name' value={firstName} style={styles.inputBox} disabled />
       </View>
       <View style={styles.singleBox}>
-        <Text style={styles.title}>Last name</Text>
-        <Text style={styles.singleText}>{lastName}</Text>
+        <TextInput label='Last name' value={lastName} style={styles.inputBox} disabled />
       </View>
       <View style={styles.singleBox}>
-        <Text style={styles.title}>Email address</Text>
-        <Text style={styles.singleText}>{emailAddress}</Text>
+        <TextInput label='Email address' value={emailAddress} style={styles.inputBox} disabled />
       </View>
     </View>
   );
@@ -45,22 +43,11 @@ function ProfileScreen() {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  title: {
-    fontWeight: '700',
-    backgroundColor: '#fff',
-    fontSize: 25,
-    padding: 10,
-  },
-  profile: {
-    justifyContent: 'space-between',
+  inputBox: {
+    backgroundColor: '#f2f2f2',
+    fontSize: 20,
   },
   singleBox: {
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-  },
-  singleText: {
-    marginTop: 10,
-    fontSize: 20,
-    fontWeight: '600',
+    paddingBottom: 15,
   },
 });
