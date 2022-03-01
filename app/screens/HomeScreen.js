@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
   },
   secondContainer: {
-    margin: 10,
+    margin: 15,
   },
   tinyLogo: {
     width: 50,
