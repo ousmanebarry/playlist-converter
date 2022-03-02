@@ -1,19 +1,28 @@
 import React from 'react';
 import { auth } from '../config/firebase';
 import Navbar from '../components/Navbar';
-import { StyleSheet, Text, View, Platform, StatusBar, Image, SafeAreaView } from 'react-native';
+import CustomCard from '../components/CustomCard';
+import { Searchbar } from 'react-native-paper';
+import { StyleSheet, Text, View, Platform, StatusBar, SafeAreaView, ScrollView } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
   const user = auth.currentUser;
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   return (
     <View style={styles.main}>
       <SafeAreaView style={styles.container}>
         <Navbar navigation={navigation} />
-        <View style={styles.secondContainer}>
-          <Text>Email: {user?.email}</Text>
-          <Text>ID: {user?.uid}</Text>
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+          <View style={styles.secondContainer}>
+            <Searchbar placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
+            <CustomCard user={user} />
+            <CustomCard user={user} />
+            <CustomCard user={user} />
+            <CustomCard user={user} />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

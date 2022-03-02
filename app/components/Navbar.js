@@ -1,13 +1,15 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 
 function Navbar({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <Icon name='navicon' size={40} color='#0782F9' onPress={() => navigation.toggleDrawer()} />
-        <Text>This is a test</Text>
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <Icon name='navicon' size={35} color='#0782F9' />
+        </TouchableOpacity>
+        <Text style={styles.text}>Playlist Converter</Text>
       </View>
     </SafeAreaView>
   );
@@ -23,5 +25,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 5,
     fontSize: 50,
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: '700',
   },
 });
