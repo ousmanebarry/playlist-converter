@@ -20,7 +20,6 @@ const HomeScreen = ({ navigation }) => {
             <CustomCard user={user} />
             <CustomCard user={user} />
             <CustomCard user={user} />
-            <CustomCard user={user} />
           </View>
         </ScrollView>
       </SafeAreaView>
