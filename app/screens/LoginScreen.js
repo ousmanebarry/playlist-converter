@@ -1,5 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
+import { TextInput as T } from 'react-native-paper';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 function LoginScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
+
   const navigation = useNavigation();
 
   const handleRedirect = () => {
@@ -18,28 +22,44 @@ function LoginScreen() {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       alert(error.code);
+      if (error.code == 'auth/invalid-email') {
+        setEmailError(true);
+      } else if (error.code == 'auth/wrong-password') {
+        setPasswordError(true);
+      } else if (error.code == 'auth/user-not-found') {
+        setEmailError(true);
+        setPasswordError(true);
+      }
     }
   };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder='Email *'
+        <T
+          mode='outlined'
+          label='Email address *'
+          activeOutlineColor='#0782F9'
           value={email}
           onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+          error={emailError}
+          onFocus={() => setEmailError(false)}
           textContentType='emailAddress'
           autoComplete='email'
           keyboardType='email-address'
-          style={styles.input}
         />
-        <TextInput
-          placeholder='Password *'
+        <T
+          mode='outlined'
+          label='Password *'
+          activeOutlineColor='#0782F9'
           value={password}
           onChangeText={(text) => setPassword(text)}
+          style={styles.input}
+          error={passwordError}
+          onFocus={() => setPasswordError(false)}
           textContentType='password'
           autoComplete='password'
-          style={styles.input}
           secureTextEntry
         />
       </View>
@@ -69,9 +89,9 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
+    height: 55,
+    // paddingHorizontal: 15,
+    // paddingVertical: 10,
     marginTop: 5,
   },
   buttonContainer: {
