@@ -17,11 +17,7 @@ const HomeScreen = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
           <View style={styles.secondContainer}>
             <Searchbar placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
-            <CustomCard user={user} />
-            <CustomCard user={user} />
-            <CustomCard user={user} />
-            <CustomCard user={user} />
-            <CustomCard user={user} />
+            <CustomCard />
           </View>
         </ScrollView>
       </SafeAreaView>
