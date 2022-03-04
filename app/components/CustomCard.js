@@ -7,7 +7,7 @@ function CustomCard({ user }) {
     <Card style={styles.card}>
       <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
       <Card.Actions>
-        <Paragraph>{user?.email}</Paragraph>
+        {/* <Paragraph>{user?.email}</Paragraph> */}
         <Button>Cancel</Button>
         <Button>Ok</Button>
       </Card.Actions>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Platform, StatusBar, SafeAreaView, TextInput } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import Navbar from '../components/Navbar';
+import CustomNavbar from '../components/CustomNavbar';
 
 function ProfileScreen({ navigation }) {
   const [firstName, setFirstName] = React.useState('');
@@ -28,7 +28,7 @@ function ProfileScreen({ navigation }) {
   return (
     <View style={styles.main}>
       <SafeAreaView style={styles.container}>
-        <Navbar navigation={navigation} />
+        <CustomNavbar navigation={navigation} />
         <View style={styles.secondContainer}>
           <View style={styles.singleBox}>
             <TextInput value={firstName} style={styles.inputBox} editable={false} />
