@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import palette from '../../palette.json';
 import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput as T, Button } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
 
 function SignupScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -61,7 +61,7 @@ function SignupScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
-        <T
+        <TextInput
           mode='outlined'
           label='First Name *'
           activeOutlineColor='#0782F9'
@@ -73,7 +73,7 @@ function SignupScreen() {
           error={firstNameError}
           onFocus={() => setFirstNameError(false)}
         />
-        <T
+        <TextInput
           mode='outlined'
           label='Last Name *'
           activeOutlineColor='#0782F9'
@@ -86,7 +86,7 @@ function SignupScreen() {
           onFocus={() => setLastNameError(false)}
         />
 
-        <T
+        <TextInput
           mode='outlined'
           label='Email address *'
           activeOutlineColor='#0782F9'
@@ -100,7 +100,7 @@ function SignupScreen() {
           keyboardType='email-address'
         />
 
-        <T
+        <TextInput
           mode='outlined'
           label='Password *'
           activeOutlineColor='#0782F9'
@@ -118,7 +118,7 @@ function SignupScreen() {
           secureTextEntry
         />
 
-        <T
+        <TextInput
           mode='outlined'
           label='Confirm Password *'
           activeOutlineColor='#0782F9'
@@ -141,8 +141,8 @@ function SignupScreen() {
         <Button
           mode='contained'
           onPress={handleSignUp}
-          style={{ backgroundColor: '#0782F9' }}
-          disabled={password && cPassword ? false : true}
+          contentStyle={styles.logoutBtnStyle}
+          disabled={password && cPassword && firstName && lastName && email ? false : true}
         >
           Sign Up
         </Button>
@@ -176,24 +176,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
   buttonOutlineText: {
     paddingTop: 30,
     color: '#0782F9',
     fontWeight: '700',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  logoutBtnStyle: {
+    width: 200,
+    height: 50,
   },
 });

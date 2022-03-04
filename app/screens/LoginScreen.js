@@ -1,6 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -68,9 +68,15 @@ function LoginScreen() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Sign in</Text>
-        </TouchableOpacity>
+        <Button
+          mode='contained'
+          onPress={handleLogin}
+          contentStyle={styles.loginBtnStyle}
+          disabled={password && email ? false : true}
+        >
+          Sign In
+        </Button>
+
         <TouchableOpacity onPress={handleRedirect}>
           <Text style={styles.buttonOutlineText}>Don't have an account? Sign up!</Text>
         </TouchableOpacity>
@@ -101,23 +107,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
     borderColor: '#0782F9',
     borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
   },
   buttonOutlineText: {
     paddingTop: 30,
@@ -126,8 +120,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecorationLine: 'underline',
   },
-  errorMsg: {
-    color: '#FF0000',
-    fontWeight: '700',
+  loginBtnStyle: {
+    width: 200,
+    height: 50,
   },
 });
