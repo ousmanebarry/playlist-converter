@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    height: 55,
+    height: 45,
     marginTop: 5,
   },
   buttonContainer: {
