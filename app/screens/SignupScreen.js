@@ -4,8 +4,8 @@ import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import palette from '../../palette.json';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { TextInput as T } from 'react-native-paper';
+import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TextInput as T, Button } from 'react-native-paper';
 
 function SignupScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -13,6 +13,12 @@ function SignupScreen() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cPassword, setCPassword] = React.useState('');
+
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [firstNameError, setFirstNameError] = React.useState(false);
+  const [lastNameError, setLastNameError] = React.useState(false);
+
   const navigation = useNavigation();
 
   const handleRedirect = () => {
@@ -33,12 +39,22 @@ function SignupScreen() {
           colourPalette: palette[Math.floor(Math.random() * palette.length)],
         });
       } else if (!firstName || !lastName) {
-        throw 'Please fill in your first and last name';
+        throw { code: 'auth/invalid-first-last-name' };
       } else {
-        throw 'Passwords do not match';
+        throw { code: 'auth/password-do-not-match' };
       }
     } catch (error) {
-      alert(error);
+      if (error.code == 'auth/invalid-first-last-name') {
+        setFirstNameError(true);
+        setLastNameError(true);
+      } else if (error.code == 'auth/invalid-email') {
+        setEmailError(true);
+      } else if (error.code == 'auth/password-do-not-match') {
+        setPasswordError(true);
+      } else {
+        setEmailError(true);
+        setPasswordError(true);
+      }
     }
   };
 
@@ -52,9 +68,10 @@ function SignupScreen() {
           value={firstName}
           onChangeText={(text) => setFirstName(text)}
           style={styles.input}
-          // textContentType='emailAddress'
-          // autoComplete='email'
-          // keyboardType='email-address'
+          textContentType='givenName'
+          autoComplete='name-given'
+          error={firstNameError}
+          onFocus={() => setFirstNameError(false)}
         />
         <T
           mode='outlined'
@@ -63,9 +80,10 @@ function SignupScreen() {
           value={lastName}
           onChangeText={(text) => setLastName(text)}
           style={styles.input}
-          // textContentType='emailAddress'
-          // autoComplete='email'
-          // keyboardType='email-address'
+          textContentType='familyName'
+          autoComplete='name-family'
+          error={lastNameError}
+          onFocus={() => setLastNameError(false)}
         />
 
         <T
@@ -75,8 +93,8 @@ function SignupScreen() {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
-          // error={emailError}
-          // onFocus={() => setEmailError(false)}
+          error={emailError}
+          onFocus={() => setEmailError(false)}
           textContentType='emailAddress'
           autoComplete='email'
           keyboardType='email-address'
@@ -89,10 +107,10 @@ function SignupScreen() {
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
-          // error={passwordError}
+          error={passwordError}
           clearTextOnFocus={true}
           onFocus={() => {
-            // setPasswordError(false);
+            setPasswordError(false);
             Platform.OS == 'android' ? setPassword('') : null;
           }}
           textContentType='password'
@@ -107,10 +125,10 @@ function SignupScreen() {
           value={cPassword}
           onChangeText={(text) => setCPassword(text)}
           style={styles.input}
-          // error={passwordError}
+          error={passwordError}
           clearTextOnFocus={true}
           onFocus={() => {
-            // setPasswordError(false);
+            setPasswordError(false);
             Platform.OS == 'android' ? setCPassword('') : null;
           }}
           textContentType='password'
@@ -120,9 +138,14 @@ function SignupScreen() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleSignUp} style={styles.button}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+        <Button
+          mode='contained'
+          onPress={handleSignUp}
+          style={{ backgroundColor: '#0782F9' }}
+          disabled={password && cPassword ? false : true}
+        >
+          Sign Up
+        </Button>
         <TouchableOpacity onPress={handleRedirect}>
           <Text style={styles.buttonOutlineText}>Already have an account? Sign in!</Text>
         </TouchableOpacity>
@@ -143,11 +166,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   input: {
-    // backgroundColor: 'white',
-    // paddingHorizontal: 15,
-    // paddingVertical: 10,
-    // borderRadius: 10,
-    // marginTop: 5,
     backgroundColor: 'white',
     height: 55,
     marginTop: 5,
@@ -170,11 +188,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderColor: '#0782F9',
     borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
   },
   buttonOutlineText: {
     paddingTop: 30,
