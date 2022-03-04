@@ -1,6 +1,6 @@
 import React from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
-import { TextInput as T } from 'react-native-paper';
+import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -21,7 +21,6 @@ function LoginScreen() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      alert(error.code);
       if (error.code == 'auth/invalid-email') {
         setEmailError(true);
       } else if (error.code == 'auth/wrong-password') {
@@ -36,7 +35,7 @@ function LoginScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
-        <T
+        <TextInput
           mode='outlined'
           label='Email address *'
           activeOutlineColor='#0782F9'
@@ -49,7 +48,7 @@ function LoginScreen() {
           autoComplete='email'
           keyboardType='email-address'
         />
-        <T
+        <TextInput
           mode='outlined'
           label='Password *'
           activeOutlineColor='#0782F9'
@@ -57,7 +56,11 @@ function LoginScreen() {
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           error={passwordError}
-          onFocus={() => setPasswordError(false)}
+          clearTextOnFocus={true}
+          onFocus={() => {
+            setPasswordError(false);
+            Platform.OS == 'android' ? setPassword('') : null;
+          }}
           textContentType='password'
           autoComplete='password'
           secureTextEntry
@@ -90,8 +93,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     height: 55,
-    // paddingHorizontal: 15,
-    // paddingVertical: 10,
     marginTop: 5,
   },
   buttonContainer: {

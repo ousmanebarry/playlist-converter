@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import palette from '../../palette.json';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { TextInput as T } from 'react-native-paper';
 
 function SignupScreen() {
   const [firstName, setFirstName] = React.useState('');
@@ -44,39 +45,76 @@ function SignupScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder='First Name *'
+        <T
+          mode='outlined'
+          label='First Name *'
+          activeOutlineColor='#0782F9'
           value={firstName}
           onChangeText={(text) => setFirstName(text)}
           style={styles.input}
-          maxLength={30}
+          // textContentType='emailAddress'
+          // autoComplete='email'
+          // keyboardType='email-address'
         />
-        <TextInput
-          placeholder='Last Name *'
+        <T
+          mode='outlined'
+          label='Last Name *'
+          activeOutlineColor='#0782F9'
           value={lastName}
           onChangeText={(text) => setLastName(text)}
           style={styles.input}
-          maxLength={30}
+          // textContentType='emailAddress'
+          // autoComplete='email'
+          // keyboardType='email-address'
         />
-        <TextInput
-          placeholder='Email *'
+
+        <T
+          mode='outlined'
+          label='Email address *'
+          activeOutlineColor='#0782F9'
           value={email}
           onChangeText={(text) => setEmail(text)}
-          keyboardType='email-address'
           style={styles.input}
+          // error={emailError}
+          // onFocus={() => setEmailError(false)}
+          textContentType='emailAddress'
+          autoComplete='email'
+          keyboardType='email-address'
         />
-        <TextInput
-          placeholder='Password *'
+
+        <T
+          mode='outlined'
+          label='Password *'
+          activeOutlineColor='#0782F9'
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
+          // error={passwordError}
+          clearTextOnFocus={true}
+          onFocus={() => {
+            // setPasswordError(false);
+            Platform.OS == 'android' ? setPassword('') : null;
+          }}
+          textContentType='password'
+          autoComplete='password'
           secureTextEntry
         />
-        <TextInput
-          placeholder='Confirm Password *'
+
+        <T
+          mode='outlined'
+          label='Confirm Password *'
+          activeOutlineColor='#0782F9'
           value={cPassword}
           onChangeText={(text) => setCPassword(text)}
           style={styles.input}
+          // error={passwordError}
+          clearTextOnFocus={true}
+          onFocus={() => {
+            // setPasswordError(false);
+            Platform.OS == 'android' ? setCPassword('') : null;
+          }}
+          textContentType='password'
+          autoComplete='password'
           secureTextEntry
         />
       </View>
@@ -105,10 +143,13 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   input: {
+    // backgroundColor: 'white',
+    // paddingHorizontal: 15,
+    // paddingVertical: 10,
+    // borderRadius: 10,
+    // marginTop: 5,
     backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
+    height: 55,
     marginTop: 5,
   },
   buttonContainer: {
