@@ -73,6 +73,7 @@ function LoginScreen() {
           onPress={handleLogin}
           contentStyle={styles.loginBtnStyle}
           disabled={email && password ? false : true}
+          style={email && password ? { backgroundColor: '#0782F9' } : { backgroundColor: '#D8D4D4' }}
         >
           Sign In
         </Button>

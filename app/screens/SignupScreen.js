@@ -143,6 +143,11 @@ function SignupScreen() {
           onPress={handleSignUp}
           contentStyle={styles.logoutBtnStyle}
           disabled={password && cPassword && firstName && lastName && email ? false : true}
+          style={
+            password && cPassword && firstName && lastName && email
+              ? { backgroundColor: '#0782F9' }
+              : { backgroundColor: '#d8d4d4' }
+          }
         >
           Sign Up
         </Button>
