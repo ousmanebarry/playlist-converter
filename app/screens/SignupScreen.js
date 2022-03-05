@@ -146,7 +146,7 @@ function SignupScreen() {
           style={
             password && cPassword && firstName && lastName && email
               ? { backgroundColor: '#0782F9' }
-              : { backgroundColor: '#d8d4d4' }
+              : { backgroundColor: '#D8D4D4' }
           }
         >
           Sign Up

@@ -25,7 +25,7 @@ function LoginScreen() {
         setEmailError(true);
       } else if (error.code == 'auth/wrong-password') {
         setPasswordError(true);
-      } else if (error.code == 'auth/user-not-found') {
+      } else {
         setEmailError(true);
         setPasswordError(true);
       }
