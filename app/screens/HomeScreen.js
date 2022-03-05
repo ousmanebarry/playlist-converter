@@ -18,6 +18,9 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.secondContainer}>
             <Searchbar placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
             <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -9,7 +9,7 @@ function Navbar({ navigation }) {
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <Icon name='navicon' size={35} color='#0782F9' />
         </TouchableOpacity>
-        <Text style={styles.text}>Playlistify</Text>
+        <Text style={styles.text}>PLAYLISTIFY</Text>
       </View>
     </SafeAreaView>
   );
@@ -18,6 +18,11 @@ function Navbar({ navigation }) {
 export default Navbar;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 5,
+    borderBottomColor: '#D8D4D4',
+    borderBottomWidth: 1,
+  },
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
