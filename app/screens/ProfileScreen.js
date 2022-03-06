@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Platform, StatusBar, SafeAreaView, TextInput } from 'react-native';
+import { View, Image, StyleSheet, Platform, StatusBar, SafeAreaView, TextInput } from 'react-native';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import CustomNavbar from '../components/CustomNavbar';
+import { Text } from 'react-native-paper';
 
 function ProfileScreen({ navigation }) {
   const [firstName, setFirstName] = React.useState('');
@@ -31,13 +32,13 @@ function ProfileScreen({ navigation }) {
         <CustomNavbar navigation={navigation} />
         <View style={styles.secondContainer}>
           <View style={styles.singleBox}>
-            <TextInput value={firstName} style={styles.inputBox} editable={false} />
+            <Text style={styles.inputBox}>{firstName}</Text>
           </View>
           <View style={styles.singleBox}>
-            <TextInput value={lastName} style={styles.inputBox} editable={false} />
+            <Text style={styles.inputBox}>{lastName}</Text>
           </View>
           <View style={styles.singleBox}>
-            <TextInput value={emailAddress} style={styles.inputBox} editable={false} />
+            <Text style={styles.inputBox}>{emailAddress}</Text>
           </View>
         </View>
       </SafeAreaView>

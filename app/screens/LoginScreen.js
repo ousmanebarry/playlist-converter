@@ -1,6 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, HelperText } from 'react-native-paper';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -48,6 +48,9 @@ function LoginScreen() {
           autoComplete='email'
           keyboardType='email-address'
         />
+        <HelperText type='error' visible={emailError}>
+          This email is invalid or the user does not exist
+        </HelperText>
         <TextInput
           mode='outlined'
           label='Password *'
@@ -65,6 +68,9 @@ function LoginScreen() {
           autoComplete='password'
           secureTextEntry
         />
+        <HelperText type='error' visible={passwordError}>
+          Wrong password, try again!
+        </HelperText>
       </View>
 
       <View style={styles.buttonContainer}>

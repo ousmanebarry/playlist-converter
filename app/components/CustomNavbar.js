@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
+import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 
 function Navbar({ navigation }) {
   return (
@@ -9,7 +10,7 @@ function Navbar({ navigation }) {
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <Icon name='navicon' size={35} color='#0782F9' />
         </TouchableOpacity>
-        <Text style={styles.text}>PLAYLISTIFY</Text>
+        <Text style={styles.text}>PlaylisTIFY</Text>
       </View>
     </SafeAreaView>
   );
