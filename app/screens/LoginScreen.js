@@ -47,10 +47,9 @@ function LoginScreen() {
           textContentType='emailAddress'
           autoComplete='email'
           keyboardType='email-address'
+          clearButtonMode='while-editing'
         />
-        <HelperText type='error' visible={emailError}>
-          This email is invalid or the user does not exist
-        </HelperText>
+        {emailError ? <HelperText type='error'>This email is invalid or the user does not exist</HelperText> : null}
         <TextInput
           mode='outlined'
           label='Password *'
@@ -68,9 +67,7 @@ function LoginScreen() {
           autoComplete='password'
           secureTextEntry
         />
-        <HelperText type='error' visible={passwordError}>
-          Wrong password, try again!
-        </HelperText>
+        {passwordError ? <HelperText type='error'>Wrong password, try again!</HelperText> : null}
       </View>
 
       <View style={styles.buttonContainer}>
